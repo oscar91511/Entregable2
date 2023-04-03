@@ -59,7 +59,7 @@ const Weather = ({ weather, temp }) => {
       </section>
       <button
         onClick={changeUnitTemp}
-        className="bg-blue-500 py-2 px-6 text-white font-bond rounded-full hover:bg-blue-800 duration-200 text-sm  block mx-auto mt-4"
+        className="  bg-teal-500 hover:border-teal-700 py-2 px-6 text-white font-bond rounded-full hover:bg-teal-700 duration-200 text-sm  block mx-auto mt-4"
       >
         Change °C/°F
       </button>

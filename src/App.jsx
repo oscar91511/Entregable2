@@ -9,6 +9,7 @@ function App() {
   const [coords, setCoords] = useState();
   const [weather, setWeather] = useState();
   const [temp, setTemp] = useState();
+  const [query, setQuery] = useState("");
   
   const success = (pos) => {
     const currentCoords = {
@@ -16,6 +17,28 @@ function App() {
       lon: pos.coords.longitude,
     };
     setCoords(currentCoords);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query) {
+      const URL = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=f572317e0af54cc31968c7c91e32df4d`;
+  
+      axios
+        .get(URL)
+        .then((res) => {
+          setWeather(res.data);
+          const celsius = (res.data.main.temp - 273.15).toFixed(1);
+          const fahrenheit = (celsius * (9 / 5) + 32).toFixed(1);
+          const newTemps = {
+            celsius,
+            fahrenheit,
+          };
+          setTemp(newTemps);
+          setQuery(""); // Limpia la barra de búsqueda después de realizar la búsqueda.
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   useEffect(() => {
@@ -43,16 +66,37 @@ function App() {
   }, [coords]);
 
   return (
-    <div className="App flex justify-center items-center min-h-screen bg-[url('/images/back-ground.jpg')] bg bg-cover px-3">
-      {
-        weather ? (
+    <div className="App flex flex-col items-center justify-center min-h-screen bg-[url('/images/back-ground.jpg')] bg-cover px-3">
+      <form onSubmit={handleSearch} className="w-full max-w-md mt-8">
+        <div className="flex items-center border-b-2 border-teal-500 py-2">
+          <input
+            className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="text"
+            placeholder="Buscar clima de otra ciudad..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button
+            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+            type="submit"
+          >
+            Buscar
+          </button>
+        </div>
+      </form>
+    {
+      
+ weather ? (
           <Weather weather={weather} temp={temp} />
         ) : (
           <Loader />
         )
      }
     </div>
+  
   );
+
+  
 }
 
 export default App;
