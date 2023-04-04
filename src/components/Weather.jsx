@@ -21,13 +21,13 @@ const Weather = ({ weather, temp }) => {
           </h3>
 
           
-            <h2 className="text-[45px] font-light sm:text-6xl">
+            <h2 className="text-[45px] font-light sm:text-6xl animate-pulse ">
               {isCelsius ? `${temp.celsius} °C` : `${temp.fahrenheit} °F`}
             </h2>
 
             <div>
               <img
-                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
+                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png `}
                 alt=""
               />
             </div>

@@ -4,13 +4,13 @@ import axios from "axios";
 import Weather from "./components/Weather";
 import Loader from "./components/Loader";
 
-
 function App() {
   const [coords, setCoords] = useState();
   const [weather, setWeather] = useState();
   const [temp, setTemp] = useState();
   const [query, setQuery] = useState("");
-  
+  const [isDay, setIsDay] = useState("");
+
   const success = (pos) => {
     const currentCoords = {
       lat: pos.coords.latitude,
@@ -23,7 +23,7 @@ function App() {
     e.preventDefault();
     if (query) {
       const URL = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=f572317e0af54cc31968c7c91e32df4d`;
-  
+
       axios
         .get(URL)
         .then((res) => {
@@ -36,6 +36,16 @@ function App() {
           };
           setTemp(newTemps);
           setQuery(""); // Limpia la barra de búsqueda después de realizar la búsqueda.
+
+          let dt = res.data.dt;
+          let sunrise = res.data.sys.sunrise;
+          let sunset = res.data.sys.sunset;
+
+          if (dt >= sunrise && dt <= sunset) {
+            setIsDay("bg-[url('/images/back-ground.jpg')]");
+          } else {
+            setIsDay("bg-[url('/images/back-ground.dark.jpg')]");
+          }
         })
         .catch((err) => console.log(err));
     }
@@ -51,22 +61,31 @@ function App() {
 
       axios
         .get(URL)
-        .then((res) => 
-        {setWeather(res.data)
-          const  celsius = (res.data.main.temp - 273.15). toFixed(1)
-          const fahrenheit = (celsius * (9/5) + 32) .toFixed(1)
+        .then((res) => {
+          setWeather(res.data);
+          const celsius = (res.data.main.temp - 273.15).toFixed(1);
+          const fahrenheit = (celsius * (9 / 5) + 32).toFixed(1);
           const newTemps = {
             celsius,
-            fahrenheit
+            fahrenheit,
+          };
+          setTemp(newTemps);
+          let dt = res.data.dt;
+          let sunrise = res.data.sys.sunrise;
+          let sunset = res.data.sys.sunset;
+
+          if (dt >= sunrise && dt <= sunset) {
+            setIsDay("bg-[url('/images/back-ground.jpg')]");
+          } else {
+            setIsDay("bg-[url('/images/back-ground.dark.jpg')]");
           }
-          setTemp(newTemps)
         })
         .catch((err) => console.log(err));
     }
   }, [coords]);
 
   return (
-    <div className="App flex flex-col items-center justify-center min-h-screen bg-[url('/images/back-ground.jpg')] bg-cover px-3">
+    <div className={`App flex flex-col items-center justify-center min-h-screen ${isDay} bg-cover px-3`}>
       <form onSubmit={handleSearch} className="w-full max-w-md mt-8">
         <div className="flex items-center border-b-2 border-teal-500 py-2">
           <input
@@ -84,19 +103,9 @@ function App() {
           </button>
         </div>
       </form>
-    {
-      
- weather ? (
-          <Weather weather={weather} temp={temp} />
-        ) : (
-          <Loader />
-        )
-     }
+      {weather ? <Weather weather={weather} temp={temp} /> : <Loader />}
     </div>
-  
   );
-
-  
 }
 
 export default App;
