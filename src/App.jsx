@@ -87,9 +87,9 @@ function App() {
   return (
     
     <div className={`App flex flex-col items-center justify-center min-h-screen ${isDay} bg-cover px-3`}>
-         <header className="flex gap-2 text-white p-4 justify-end">
+         <header className="flex gap-2 text-white  p-4 justify-end">
         <a
-          className="text-4xl"
+          className="text-4xl hover:text-teal-500"
           target="_blank"
           rel="noopener noreferrer"
           href="https://github.com/oscar91511/entregable2"
@@ -97,7 +97,7 @@ function App() {
           <i className="bx bxl-github "></i>
         </a>
         <a
-          className="text-4xl"
+          className="text-4xl hover:text-teal-500"
           target="_blank" // permite abrir en nueva pestaña
           rel="noopener noreferrer" //evita malwares maliciosos al abrir ventanas
           href="https://www.linkedin.com/in/oscar-eduardo-lopez-restrepo-968a91265/"
@@ -105,7 +105,7 @@ function App() {
           <i className="bx bxl-linkedin "></i>
         </a>
         <a
-          className="text-4xl"
+          className="text-4xl hover:text-teal-500"
           target="_blank"
           rel="noopener noreferrer"
           href="https://www.instagram.com/oscar915lr/"
