@@ -85,7 +85,34 @@ function App() {
   }, [coords]);
 
   return (
+    
     <div className={`App flex flex-col items-center justify-center min-h-screen ${isDay} bg-cover px-3`}>
+         <header className="flex gap-2 text-white p-4 justify-end">
+        <a
+          className="text-4xl"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/oscar91511/entregable2"
+        >
+          <i className="bx bxl-github "></i>
+        </a>
+        <a
+          className="text-4xl"
+          target="_blank" // permite abrir en nueva pestaña
+          rel="noopener noreferrer" //evita malwares maliciosos al abrir ventanas
+          href="https://www.linkedin.com/in/oscar-eduardo-lopez-restrepo-968a91265/"
+        >
+          <i className="bx bxl-linkedin "></i>
+        </a>
+        <a
+          className="text-4xl"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.instagram.com/oscar915lr/"
+        >
+          <i className="bx bxl-instagram"></i>
+        </a>
+      </header>
       <form onSubmit={handleSearch} className="w-full max-w-md mt-8">
         <div className="flex items-center border-b-2 border-teal-500 py-2">
           <input
